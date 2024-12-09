@@ -9,10 +9,29 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: rgba(5, 11, 24, 0.8);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.bg-blue-glow {
+  background: radial-gradient(
+      circle at 50% 75%,
+      rgba(25, 42, 86, 0.8) 0%,
+      rgba(10, 10, 30, 1) 40%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    linear-gradient(to bottom, rgba(25, 42, 86, 0.7) 10%, rgba(0, 0, 0, 0.9) 70%);
+  filter: blur(0.5px);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }

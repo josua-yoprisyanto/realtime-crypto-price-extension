@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import CryptoPair from "./CryptoPair";
-import { IconCheck } from "@tabler/icons-react";
+import CryptoPair from "./components/CryptoPair";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 const App = () => {
   const [adjustPair, setAdjustPair] = useState<boolean>(false);
@@ -9,7 +9,7 @@ const App = () => {
   const [pairs, setPairs] = useState<string[]>(() =>
     JSON.parse(localStorage.getItem("cryptoPairs") || "[]").length > 0
       ? JSON.parse(localStorage.getItem("cryptoPairs") || "[]")
-      : ["btcusdt", "ethusdt", "solusdt", "bnbusdt", "xrpusdt", "mantausdt"]
+      : ["btcusdt", "ethusdt", "solusdt", "bnbusdt", "xrpusdt"]
   );
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const App = () => {
       return;
     }
     if (!pairRegex.test(lowerPair)) {
-      alert("Invalid trading pair format. Example: btcusdt");
+      alert("Invalid trading pair format. Example: BTCUSDT");
       return;
     }
     if (pairs.includes(lowerPair)) {
@@ -47,9 +47,9 @@ const App = () => {
   };
 
   return (
-    <div className="w-[400px] h-[600px] overflow-auto p-5 shadow-md bg-slate-900">
+    <div className="w-[400px] h-auto max-h-[600px] overflow-auto p-5 shadow-md bg-blue-glow ">
       <h1 className="text-center text-2xl mb-5 font-bold">
-        Crypto Price Tracking ({pairs.length})
+        Live Crypto Price Monitor ({pairs.length})
       </h1>
 
       {pairs.map((pair) => (
@@ -62,31 +62,38 @@ const App = () => {
       ))}
 
       {adjustPair && (
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between gap-2 mt-5">
           <input
             type="text"
             onChange={(e) => setNewPair(e.target.value)}
-            className="bg-transparent border rounded-md p-2 w-full uppercase"
-            placeholder="BTC"
+            className="bg-transparent border rounded-md p-2 w-full uppercase text-lg"
+            placeholder="EX: BTCUSDT"
           />
-          <button
-            className="border rounded-md p-2 border-green-400"
-            onClick={() => handleAddPair()}
-          >
-            <IconCheck stroke={2} color="green" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              className="border rounded-md p-2 border-green-400"
+              onClick={() => handleAddPair()}
+            >
+              <IconCheck stroke={2} color="green" />
+            </button>
+            <button
+              className="border rounded-md p-2 border-red-400"
+              onClick={() => setAdjustPair(false)}
+            >
+              <IconX stroke={2} color="red" />
+            </button>
+          </div>
         </div>
       )}
 
-      <button
-        className={`border rounded-md p-2 w-full mt-5 ${
-          adjustPair ? "border-red-500" : "border-white"
-        }`}
-        disabled={pairs.length === 10}
-        onClick={() => setAdjustPair(!adjustPair)}
-      >
-        {adjustPair ? <span className="text-red-500">Cancel</span> : <span>Adjust Pair</span>}
-      </button>
+      {!adjustPair && (
+        <button
+          className={`border rounded-md p-2 w-full mt-5 "border-white`}
+          onClick={() => setAdjustPair(true)}
+        >
+          <span className="text-lg">Adjust Pair</span>
+        </button>
+      )}
     </div>
   );
 };

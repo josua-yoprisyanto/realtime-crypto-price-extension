@@ -1,5 +1,5 @@
 import React from "react";
-import useWebSocket from "./useWebSocket";
+import useWebSocket from "../utils/useWebSocket";
 import { IconTrash } from "@tabler/icons-react";
 
 interface CryptoPairProps {
