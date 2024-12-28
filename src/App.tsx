@@ -18,16 +18,12 @@ const App = () => {
 
   const handleAddPair = () => {
     const lowerPair = newPair.toLowerCase();
-    const pairRegex = /^[a-z]{3,10}usdt$/;
 
     if (!newPair) {
       alert("Please enter a trading pair.");
       return;
     }
-    if (!pairRegex.test(lowerPair)) {
-      alert("Invalid trading pair format. Example: BTCUSDT");
-      return;
-    }
+
     if (pairs.includes(lowerPair)) {
       alert("This trading pair is already being tracked.");
       return;
